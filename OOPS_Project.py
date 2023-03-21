@@ -1,23 +1,28 @@
 # Python program that provides various functionalities which a college requires using OOPS concepts.
+from select import select
 import pandas as pd
 import datetime
+import csv
+import time
 # Admission class
 
 
 class Admission:
     '''Admission class is the class which handles the process of admission of a student based on the eligibity criteria'''
-    with open('appln_count.txt', 'r') as f:
+    with open("C:\\Users\\2145644\\OOPS Project\\counts\\appln_count.txt", 'r') as f:
         counter = int(f.read())
 
     # Courses available in college.
-    df = pd.read_csv("seat_count.csv")
+    df = pd.read_csv("C:\\Users\\2145644\\OOPS Project\\Data\\seat_count.csv")
     courses = {"Science": [["BCA", df.loc[0][0], 100000], ["BCA in Analytics", df.loc[0][1], 120000], ["BSc(PMCS)", df.loc[0][2], 80000], ["BSc(PME)", df.loc[0][3], 80000]], "Commerce": [["BBA", df.loc[0][4], 100000], ["BBA in Aviation", df.loc[0][5], 120000], [
         "BCom", df.loc[0][6], 80000], ["BCom in Finance", df.loc[0][7], 100000], ["BCom in Tourism", df.loc[0][8], 100000]], "Arts": [["BA in English", df.loc[0][9], 80000], ["BA in Sociology", df.loc[0][10], 80000], ["BA in Economics", df.loc[0][11], 80000]]}
 
     def __init__(self, first_name, last_name, gender, dob, phone_no, email_id, address, father_name, father_occupation, mother_name, mother_occupation, category, tenth_score, twelveth_score, previous_stream, stream_opting_for, course_opting_for, achievements):
         # Personal details
-        self.__appno = "APPLN" + str(Admission.counter)
-        with open('appln_count.txt', 'w') as f:
+        current = datetime.date.today()
+        current_year = current.year
+        self.__appno = str(current_year) + "APPLN" + str(Admission.counter)
+        with open("C:\\Users\\2145644\\OOPS Project\\counts\\appln_count.txt", 'w') as f:
             Admission.counter += 1
             f.write(str(Admission.counter))
 
@@ -175,10 +180,10 @@ class Admission:
         status = 0
         stream_opted = self.__stream_opting_for
         course_opted = self.__course_opting_for
-        for stream, courses in Admission.courses.items():
+        for stream, course in Admission.courses.items():
             if stream != stream_opted:
                 continue
-            for course_name, seats, fee in courses:
+            for course_name, seats, fee in course:
                 if course_name == course_opted:
                     status = 1
                     if seats != 0:
@@ -195,34 +200,35 @@ class Admission:
         '''This function checks the eligibility of a student based on the course he/she has completed and the marks he has scored in his previous grade and the category he belongs to.'''
         marks_scored = self.get_twelveth_score()
         previous_stream = self.get_previous_stream_compelted()
-        opting_stream = self.get_stream_opting_for()
         category = self.get_category()
 
-        if previous_stream == "Science" and opting_stream == "Science" or opting_stream == "Commerce" or opting_stream == "Arts":
-            if category == "General" and int(marks_scored) > 75:
-                return True
-            elif category == "SC|ST" or category == "2A" or category == "2B" or category == "3B" and int(marks_scored) > 70:
-                return True
-            else:
-                return "Unfortunately, you are not eligible for this course based on the marks you have scored in your previous grade."
-
-        elif previous_stream == "Commerce" and opting_stream == "Commerce" or opting_stream == "Arts":
+        if previous_stream == "Science":
             if category == "General" and int(marks_scored) > 80:
                 return True
-            elif category == "SC|ST" and int(marks_scored) > 60 or category == "2A" and int(marks_scored) > 60 or category == "2B" and int(marks_scored) > 60 or category == "3B" and int(marks_scored) > 60:
-                return True
-            else:
-                return "Unfortunately, you are not eligible for this course based on the marks you have scored in your previous grade."
+            elif category == "SC|ST" or category == "2A" or category == "2B" or category == "3B":
+                if int(marks_scored) > 70:
+                    return True
+                else:
+                    return "Unfortunately, you are not eligible for this course based on the marks you have scored in your previous grade."
 
-        elif previous_stream == "Arts" and opting_stream == "Arts":
+        elif previous_stream == "Commerce":
             if category == "General" and int(marks_scored) > 80:
                 return True
-            elif category == "SC|ST" or category == "2A" or category == "2B" or category == "3B" and int(marks_scored) > 50:
+            elif category == "SC|ST"  or category == "2A"  or category == "2B"  or category == "3B":
+                if int(marks_scored) > 70:
+                    return True
+                else:
+                    return "Unfortunately, you are not eligible for this course based on the marks you have scored in your previous grade."
+
+        elif previous_stream == "Arts":
+            if category == "General" and int(marks_scored) > 80:
                 return True
-            else:
-                return "Unfortunately, you are not eligible for this course based on the marks you have scored in your previous grade."
-        else:
-            return "You cannot opt for this course as you do not have the required educational background."
+            elif category == "SC|ST" or category == "2A" or category == "2B" or category == "3B":
+                if int(marks_scored) > 70:
+                    return True
+                else:
+                    return "Unfortunately, you are not eligible for this course based on the marks you have scored in your previous grade."
+    
 
     # Collects documents input from the user.
     def document_submission(self):
@@ -230,7 +236,7 @@ class Admission:
     
         counter1 = 0
         while counter1 == 0:
-            tenth_marks_card = input("\nDo you have your 10th marks card? Y/N\n")
+            tenth_marks_card = input("\nDo you have your 10th marks card? Y/N - ")
             if tenth_marks_card.upper() == "Y":
                 documents["10th_marks_card"] = "Submitted"
                 counter1 = 1
@@ -241,7 +247,7 @@ class Admission:
                 print("\nInvalid input")
         counter2 = 0
         while counter2 == 0:
-            twelveth_marks_card = input("Do you have your 12th marks card? Y/N\n")
+            twelveth_marks_card = input("\nDo you have your 12th marks card? Y/N - ")
             if twelveth_marks_card.upper() == "Y":
                 documents["12th_marks_card"] = "Submitted"
                 counter2 = 1
@@ -252,7 +258,7 @@ class Admission:
                 print("\nInvalid input")
         counter3 = 0
         while counter3 == 0:
-            aadhar_card = input("Do you have your Aadhar card? Y/N\n")
+            aadhar_card = input("\nDo you have your Aadhar card? Y/N - ")
             if aadhar_card.upper() == "Y":
                 documents["Aadhar_Card"] = "Submitted"
                 counter3 = 1
@@ -263,7 +269,7 @@ class Admission:
                 print("\nInvalid input")
         counter4 = 0
         while counter4 == 0:
-            code_of_conduct = input("Do you have your code_of_conduct? Y/N\n")
+            code_of_conduct = input("\nDo you have your code_of_conduct? Y/N - ")
             if code_of_conduct.upper() == "Y":
                 documents["Code_of_conduct"] = "Submitted"
                 counter4 = 1
@@ -274,7 +280,7 @@ class Admission:
                 print("\nInvalid input")
         counter5 = 0
         while counter5 == 0:
-            transfer_cert = input("Do you have your transfer certificate? Y/N\n")
+            transfer_cert = input("\nDo you have your transfer certificate? Y/N - ")
             if transfer_cert.upper() == "Y":
                 documents["Transfer_certificate"] = "Submitted"
                 counter5 = 1
@@ -289,7 +295,7 @@ class Admission:
     # Collects fee payement input from the user.
     def fee_payment(self):
         fee_to_be_paid = 0
-        df = pd.read_csv("seat_count.csv")
+        df = pd.read_csv("C:\\Users\\2145644\\OOPS Project\\Data\\seat_count.csv")
 
         course_info = Admission.courses
         course_opted = self.get_course_opting_for()
@@ -300,7 +306,7 @@ class Admission:
                     counter = 0
                     while counter == 0:
                         answer = input(
-                            f"\nPlease pay the {fee_to_be_paid} amount to get your admission done. Enter Y to complete the process\n")
+                            f"\nPlease pay the {fee_to_be_paid} amount to get your admission done. Enter Y to complete the process - ")
                         if answer.upper() == "Y":
                             seats -= 1
                         # Reducing seat count by one after the completition of admission process.
@@ -331,7 +337,7 @@ class Admission:
                             counter = 1
                         else:
                             print("\nInvalid input")
-                        df.to_csv("seat_count.csv", index=False)
+                        df.to_csv("C:\\Users\\2145644\\OOPS Project\\Data\\seat_count.csv", index=False)
                     
 
 # Student class
@@ -339,54 +345,54 @@ class Student():
     '''Create Student ID based on the details collected in application.'''
     def __init__(self,appno,name,dob,phoneno,address,stream,course):
         if course == "BCA":
-           txtFile = "bca.txt"
-           csvFile = "f_bca.csv"
+           txtFile = "counts\\bca.txt"
+           csvFile = "Data\\f_bca.csv"
            initial = "BCA"
         elif course == "BCA in Analytics":
-            txtFile = "bca_in_analytics.txt"
-            csvFile = "f_bca_ana.csv"
+            txtFile = "counts\\bca_in_analytics.txt"
+            csvFile = "Data\\f_bca_ana.csv"
             initial = "BCAAN"
         elif course == "BSc(PMCS)":
-            txtFile = "bscpmcs.txt"
-            csvFile = "f_bsc(pmcs).csv"
+            txtFile = "counts\\bscpmcs.txt"
+            csvFile = "Data\\f_bsc(pmcs).csv"
             initial = "BSCPMCS"
         elif course == "BSc(PME)":
-            txtFile = "bscpme.txt"
-            csvFile = "f_bsc(pme).csv"
+            txtFile = "counts\\bscpme.txt"
+            csvFile = "Data\\f_bsc(pme).csv"
             initial = "BSCPME"
         elif course == "BBA":
-            txtFile = "bba.txt"
-            csvFile = "f_bba.csv"
+            txtFile = "counts\\bba.txt"
+            csvFile = "Data\\f_bba.csv"
             initial = "BBA"
         elif course == "BBA in Aviation":
-            txtFile = "bba_aviation.txt"
-            csvFile = "f_bba_ava.csv"
+            txtFile = "counts\\bba_aviation.txt"
+            csvFile = "Data\\f_bba_ava.csv"
             initial = "BBAAV"
         elif course == "BCom":
-            txtFile = "bcom.txt"
-            csvFile = "f_bcom.csv"
+            txtFile = "counts\\bcom.txt"
+            csvFile = "Data\\f_bcom.csv"
             initial = "BCOM"
         elif course == "BCom in Finance":
-            txtFile = "bcom_finance.txt"
-            csvFile = "f_bcom_fin.csv"
+            txtFile = "counts\\bcom_finance.txt"
+            csvFile = "Data\\f_bcom_fin.csv"
             initial = "BCOMFI"
         elif course == "BCom in Tourism":
-            txtFile = "bcom_tourism.txt"
-            csvFile = "f_bcom_tou.csv"
+            txtFile = "counts\\bcom_tourism.txt"
+            csvFile = "Data\\f_bcom_tou.csv"
             initial = "BCOMTU"
         elif course == "BA in English":
-            txtFile = "ba_english.txt"
-            csvFile = "f_ba_eng.csv"
+            txtFile = "counts\\ba_english.txt"
+            csvFile = "Data\\f_ba_eng.csv"
             initial = "BAENG"
         elif course == "BA in Economics":
-            txtFile = "ba_economics.txt"
-            csvFile = "f_ba_eco.csv"
+            txtFile = "counts\\ba_economics.txt"
+            csvFile = "Data\\f_ba_eco.csv"
             initial = "BAECO"
         elif course == "BA in Sociology":
-            txtFile = "ba_sociology.txt"
-            csvFile = "f_ba_soc.csv"
+            txtFile = "counts\\ba_sociology.txt"
+            csvFile = "Data\\f_ba_soc.csv"
             initial = "BASOC"
-
+        
         with open(txtFile, 'r') as r:
             count = r.read()
             year = datetime.date.today().year
@@ -396,7 +402,7 @@ class Student():
            count = str(int(count) + 1)
            w.write(count)
 
-        self.__appno = appno
+        self.__appno = appno 
         self.__name = name
         self.__dob = dob
         self.__emailid = self.__reg_no + "@kristujayanti.com"
