@@ -6,7 +6,6 @@ from csv import writer
 import time
 import pandas as pd
 import datetime
-import ast
 
 
 def clear(): return os.system('cls')
@@ -19,6 +18,8 @@ data = {"BCA": ["Data\\f_bca.csv", "Data\\s_bca.csv", "Data\\t_bca.csv"], "BCA i
     "Data\\f_bcom.csv", "Data\\s_bcom.csv", "Data\\t_bcom.csv"], "BCom in Finance": ["Data\\f_bcom_fin.csv", "Data\\s_bcom_fin.csv", "Data\\t_bcom_fin.csv"], "BCom in Tourism": ["Data\\f_bcom_tou.csv", "Data\\s_bcom_tou.csv", "Data\\t_bcom_tou.csv"], "BA in English": ["Data\\f_ba_eng.csv", "Data\\s_ba_eng.csv", "Data\\t_ba_eng.csv"], "BA in Sociology": ["Data\\f_ba_soc.csv", "Data\\s_ba_soc.csv", "Data\\t_ba_soc.csv"], "BA in Economics": ["Data\\f_ba_eco.csv", "Data\\s_ba_eco.csv", "Data\\t_ba_eco.csv"]}
 count = ["counts\\bca.txt", "counts\\bca_in_analytics.txt", "counts\\bscpmcs.txt", "counts\\bscpme.txt", "counts\\bba.txt", "counts\\bba_aviation.txt",
          "counts\\bcom.txt", "counts\\bcom_finance.txt", "counts\\bcom_tourism.txt", "counts\\ba_english.txt", "counts\\ba_economics.txt", "counts\\ba_sociology.txt"]
+timeTable = {"BCA": ["time_table\\f_bca_tt.csv", "time_table\\s_bca_tt.csv", "time_table\\t_bca_tt.csv"], "BCA in Analytics": ["time_table\\f_bcaana_tt.csv", "time_table\\s_bcaana_tt.csv", "time_table\\t_bcaana_tt.csv"], "BSc(PMCS)": ["time_table\\f_bsc(pmcs)_tt.csv", "time_table\\s_bsc(pmcs)_tt.csv", "time_table\\t_bsc(pmcs)_tt.csv"], "BSc(PME)": ["time_table\\f_bsc(pme)_tt.csv", "time_table\\s_bsc(pme)_tt.csv", "time_table\\t_bsc(pme)_tt.csv"], "BBA": ["time_table\\f_bba_tt.csv", "time_table\\s_bba_tt.csv", "time_table\\t_bba_tt.csv"], "BBA in Aviation": ["time_table\\f_bbaava_tt.csv", "time_table\\s_bbaava_tt.csv", "time_table\\t_bbaava_tt.csv"], "BCom": [
+    "time_table\\f_bcom_tt.csv", "time_table\\s_bcom_tt.csv", "time_table\\t_bcom_tt.csv"], "BCom in Finance": ["time_table\\f_bcomfin_tt.csv", "time_table\\s_bcomfin_tt.csv", "time_table\\t_bcomfin_tt.csv"], "BCom in Tourism": ["time_table\\f_bcomtou_tt.csv", "time_table\\s_bcomtou_tt.csv", "time_table\\t_bcomtou_tt.csv"], "BA in English": ["time_table\\f_baeng_tt.csv", "time_table\\s_baeng_tt.csv", "time_table\\t_baeng_tt.csv"], "BA in Sociology": ["time_table\\f_basoc_tt.csv", "time_table\\s_basoc_tt.csv", "time_table\\t_basoc_tt.csv"], "BA in Economics": ["time_table\\f_baeco_tt.csv", "time_table\\s_baeco_tt.csv", "time_table\\t_baeco_tt.csv"]}
 
 
 def main_menu():
@@ -157,24 +158,24 @@ def admission():
         while ts == 0:
             tenth_score = input(
                 "\nEnter your 10th grade marks (in percentage %) : ")
-            if tenth_score.isdigit() == False or tenth_score in '`~!@#$%^&*()-_+={\}[]|\:;"\'<,>.?/' or int(tenth_score) > 100 :
+            if tenth_score.isdigit() == False or tenth_score in '`~!@#$%^&*()-_+={\}[]|\:;"\'<,>.?/' or int(tenth_score) > 100:
                 print("\nEnter marks ranging from 1 to 100")
             elif tenth_score == "0":
                 admission()
             elif tenth_score.isdigit():
                 ts = 1
-          
+
         tws = 0
         while tws == 0:
             twelveth_score = input(
                 "\nEnter your 12th grade marks (in percentage %) : ")
             if twelveth_score.isdigit() == False or twelveth_score in '`~!@#$%^&*()-_+={\}[]|\:;"\'<,>.?/' or int(twelveth_score) > 100:
-               print("\nEnter marks ranging from 1 to 100")
+                print("\nEnter marks ranging from 1 to 100")
             elif twelveth_score == "0":
                 admission()
             elif tenth_score.isdigit():
                 tws = 1
-        
+
         aps = 0
         while (aps == 0):
             ans3 = input(
@@ -337,11 +338,11 @@ def admission():
         print("Applicant's result".center(146, '-'))
         if m == "Selected":
             print("\n\nCongratulations on getting selected ! Please proceed with document submission and fee payment process to end the admission formalities.\n\n")
-        
+
         elif a.get_status() == "Not selected":
             print(f"\n{m}")
             time.sleep(10)
-        
+
         else:
             print(f"\n{m}")
             time.sleep(10)
@@ -358,10 +359,10 @@ def admission():
         if m == "Selected":
             time.sleep(3)
             print("Document Submission".center(146, '-'))
-            Admission.document_submission(a)    
+            Admission.document_submission(a)
             fee_process(a)
         else:
-            Admission.set_documents(a, "NA")    
+            Admission.set_documents(a, "NA")
             save_data(a)
 
     # Fifth step of admission process.
@@ -380,14 +381,14 @@ def admission():
             key = i.replace("_Admission__", "")
             new_info[key] = j
             data = [new_info]
-        
+
         fields = ["appno", "first_name", "last_name", "gender", "dob", "phone_no", "email_id", "address", "father_name", "father_occupation", "mother_name",
                   "mother_occupation", "category", "tenth_score", "twelveth_score", "previous_stream", "stream_opting_for", "course_opting_for", "achievements", "status", "documents"]
-      
+
         with open('Data\\applications.csv', 'a', newline='') as f:
             writer = csv.DictWriter(f, fieldnames=fields)
-            writer.writerows(data)   
-            admission()  
+            writer.writerows(data)
+            admission()
 
     # Updating applicant's information
     def update_app():
@@ -399,7 +400,7 @@ def admission():
             if row1[0] == 'appno':
                 continue
             appln_no.append(row1[0])
-           
+
         print(" Update Application ".center(146, '-'))
         print("\nPress 0 to go back to main menu")
         status = 0
@@ -423,7 +424,8 @@ def admission():
             if row[0] == appno:
                 for i in range(len(row)):
                     if i == 15 or i == 16 or i == 17:
-                        print(f"\n{index} . {columns[i]} : {row[i]} - Cannot be updated/changed.")
+                        print(
+                            f"\n{index} . {columns[i]} : {row[i]} - Cannot be updated/changed.")
                         index += 1
                         continue
                     if i == 19:
@@ -432,9 +434,9 @@ def admission():
                         str_docs = eval(row[i])
                         print(f"\n{index} . Documents")
                         print("---------------------")
-                        for doc,stats in str_docs.items():
+                        for doc, stats in str_docs.items():
                             print(f" {doc.strip()} : {stats.strip()}")
-                        continue   
+                        continue
                     print(f"\n{index} . {columns[i]} : {row[i]}")
                     index += 1
                 break
@@ -555,7 +557,7 @@ def admission():
                 ts = 0
                 while ts == 0:
                     u_tenth = input("\nEnter your 10th grade marks : ")
-                    if u_tenth.isdigit() == False or u_tenth in '`~!@#$%^&*()-_+={\}[]|\:;"\'<,>.?/' or int(u_tenth) > 100 :
+                    if u_tenth.isdigit() == False or u_tenth in '`~!@#$%^&*()-_+={\}[]|\:;"\'<,>.?/' or int(u_tenth) > 100:
                         print("\nEnter marks ranging from 1 to 100")
                     elif u_tenth == "0":
                         ts = 1
@@ -569,22 +571,22 @@ def admission():
                     u_twelve = input("\nEnter your 12th grade marks : ")
                     if u_twelve.isdigit() == False or u_twelve in '`~!@#$%^&*()-_+={\}[]|\:;"\'<,>.?/' or int(u_twelve) > 100:
                         print("\nEnter marks ranging from 1 to 100")
-                    elif  u_twelve == "0":
+                    elif u_twelve == "0":
                         tws = 1
                     elif u_twelve.isdigit():
                         tws = 1
-                    
+
                 df.loc[(row_pos - 1), 'twelveth_score'] = u_twelve
 
             elif option == "15":
                 print("\nThis option cannot be changed")
-               
+
             elif option == "16":
-               print("\nThis option cannot be changed")
+                print("\nThis option cannot be changed")
 
             elif option == "17":
-                 print("\nThis option cannot be changed")
-                      
+                print("\nThis option cannot be changed")
+
             elif option == "18":
                 u_achievements = input(
                     "\nEnter your achievements : ").capitalize()
@@ -595,12 +597,13 @@ def admission():
                 dictDocs = eval(docs)
                 for document, status in dictDocs.items():
                     if status.strip() == "Not submitted":
-                        resp = input(f"Do you have your {document.strip()}? Y/N : ")
+                        resp = input(
+                            f"Do you have your {document.strip()}? Y/N : ")
                         if resp.upper() == "Y":
                             dictDocs[document] = "Submitted"
                 print("Document submission status updated")
                 df.loc[(row_pos - 1), 'documents'] = str(dictDocs)
-               
+
             df.to_csv("Data\\applications.csv", index=False)
 
     counter = 0
@@ -610,7 +613,7 @@ def admission():
         print("Welcome to the Admissions Department.".center(150))
         print("Please select an option to proceed.\n\n1. Apply\n2. Update your application\n3. Go back")
         ans = input("\nEnter the option number : ")
-        if ans.isdigit() and  ans not in "`~!@#$%^&*()-_=+\{\}[]\|:;'\"<>,.?/\\" and int(ans) <= 3:
+        if ans.isdigit() and ans not in "`~!@#$%^&*()-_=+\{\}[]\|:;'\"<>,.?/\\" and int(ans) <= 3:
             counter = 1
         else:
             print("Invalid input")
@@ -688,12 +691,11 @@ def idcard():
 
         applnos = []
         csv_file_reader = csv.reader(open(csvFile, "r"))
-        for row in csv_file_reader: 
+        for row in csv_file_reader:
             for i in row:
                 applnos.append(i)
                 break
-        
-    
+
         if applno in applnos:
             print("\nApplication number is already registered. Please go to View ID Card option to see the ID card details")
             time.sleep(5)
@@ -782,16 +784,17 @@ Email : {a.get_emailid()}
                 print("\nInvalid input")
 
         appno = input("\nEnter your application number : ")
-        csvFilereader = csv.reader(open(csvFile,"r"))
+        csvFilereader = csv.reader(open(csvFile, "r"))
         details = []
         for row in csvFilereader:
             for i in row:
                 if i == appno:
                     details = row
                     break
-            
+
         if len(details) == 0:
-            print("Application number doesn't exist. Please enter the right application number.")
+            print(
+                "Application number doesn't exist. Please enter the right application number.")
             time.sleep(5)
             idcard()
         else:
@@ -808,6 +811,7 @@ Phone : {details[5]}
 Email : {details[4]} 
 ----------------------------------------''')
             time.sleep(20)
+            idcard()
 
     counter = 0
     while counter == 0:
@@ -815,7 +819,7 @@ Email : {details[4]}
         print(" ID Card Center ".center(146, '-'))
         print("\nPlease select an option to proceed:\n\n1. Register for ID card (For First years only)\n2. View ID card\n3. Go back\n")
         inp = input("Enter the option number : ")
-        if inp.isdigit() and inp not in "`~!@#$%^&*()-_=+\{\}[]\|:;'\"<>,.?/\\" and int(inp) <= 3 :
+        if inp.isdigit() and inp not in "`~!@#$%^&*()-_=+\{\}[]\|:;'\"<>,.?/\\" and int(inp) <= 3:
             counter = 1
         else:
             print("Invalid input\n")
@@ -830,56 +834,95 @@ Email : {details[4]}
     elif inp == "3":
         main_menu()
 
+
 def exam():
     def check_time_table():
         clear()
-        stats = 0
-        while stats == 0:
-            csv_file = None
-            stream = input("Press 0 to go back \nEnter your stream name : ")
+        tt = 0
+        print("Enter 0 to go back\nSelect your stream\n1. BCA\n2. BCA in Analytics\n3. BSc(PMCS)\n4. BSc(PME)\n5. BBA\n6. BBA in Aviation\n7. BCom\n8. BCom in Finance\n9. BCom in Tourism\n10. BA in English\n11. BA in Sociology\n12. BA in Economics")
+        while tt == 0:
+            stream = input("\nEnter option number: ")
             if stream == "0":
                 exam()
-            elif stream == "BCA":
-                csv_file = "C:\\Users\\2145644\\OOPS Project\\time_table\\BCA_TT.csv"
-            elif stream == "BBA":
-                csv_file = "C:\\Users\\2145644\\OOPS Project\\time_table\\BBA_TT.csv"
-            elif stream == "BA in Economics":
-                csv_file = "C:\\Users\\2145644\\OOPS Project\\Data\\BA_ECO_TT.csv"
+            elif stream == "1":
+                course = "BCA"
+                tt = 1
+            elif stream == "2":
+                course = "BCA in Analytics"
+                tt = 1
+            elif stream == "3":
+                course = "BSc(PMCS)"
+                tt = 1
+            elif stream == "4":
+                course = "BSc(PME)"
+                tt = 1
+            elif stream == "5":
+                course = "BBA"
+                tt = 1
+            elif stream == "6":
+                course = "BBA in Aviation"
+                tt = 1
+            elif stream == "7":
+                course = "Bcom"
+                tt = 1
+            elif stream == "8":
+                course = "Bcom in Finance"
+                tt = 1
+            elif stream == "9":
+                course = "Bcom in Tourism"
+                tt = 1
+            elif stream == "10":
+                course = "BA in English"
+                tt = 1
+            elif stream == "11":
+                course = "BA in Sociology"
+                tt = 1
+            elif stream == "12":
+                course = "BA in Ettnomics"
+                tt = 1
             else:
-                print("Enter right input")
+                print("Invalid input")
 
-            csv_file_reader4 = csv.reader(open(csv_file, "r"))
-            exam_code = []
-            exam_name = []
-            exam_type = []
-            exam_date = []
-            exam_duration = []
-            exam_marks = []
+        print("\nEnter your current year\n1. 1st year\n2. 2nd year\n3. 3rd year")
+        year = 0
+        while year == 0:
+            inp2 = input("Enter option number : ")
+            if inp2 == "1":
+                csvFile = timeTable[course][0]
+                year = 1
+            elif inp2 == "2":
+                csvFile = timeTable[course][1]
+                year = 1
+            elif inp2 == "3":
+                csvFile = timeTable[course][2]
+                year = 1
+            else:
+                print("\nInvalid input")    
+        print(csvFile)
+        csv_file_reader4 = csv.reader(open(csvFile, "r"))
+        exam_code = []
+        exam_name = []
+        exam_type = []
+        exam_date = []
+        exam_duration = []
+        exam_marks = []
 
-            for rows in csv_file_reader4:
-                exam_code.append(rows[0])
-                exam_name.append(rows[1])
-                exam_type.append(rows[2])
-                exam_date.append(rows[3])
-                exam_duration.append(rows[4])
-                exam_marks.append(rows[5])
+        for rows in csv_file_reader4:
+            exam_code.append(rows[0])
+            exam_name.append(rows[1])
+            exam_type.append(rows[2])
+            exam_date.append(rows[3])
+            exam_duration.append(rows[4])
+            exam_marks.append(rows[5])
 
-            print('''\n   Date    | Exam Code |  Exam Type  |  Exam Duration |  Total Marks  | Exam Name            
+        print('''\n   Date    | Exam Code |  Exam Type  |  Exam Duration |  Total Marks  | Exam Name            
 --------------------------------------------------------------------------------------------''')
-            for i in range(1, len(exam_code)):
-                print(
-                    f"{exam_date[i]} |  {exam_code[i]}   |     {exam_type[i]}       |   {exam_duration[i]}   |      {exam_marks[i]}      | {exam_name[i]}                  ")
-            print("\nT - Theory\nP - Practical")
-            counter = 0
-            while counter == 0:
-                ans = input("\nEnter 0 to go back : ")
-                if ans.isalpha() or ans in "123456789`~!@#$%^&*()-_=+\{\}[]\|:;'\"<>,.?/\\":
-                    print("Invalid input")
-                    time.sleep(1)
-                else:
-                    counter = 1
-            if ans == "0":
-                exam()
+        for i in range(1, len(exam_code)):
+            print(
+                f"{exam_date[i]} |  {exam_code[i]}   |     {exam_type[i]}       |   {exam_duration[i]}   |      {exam_marks[i]}      | {exam_name[i]}                  ")
+        print("\nT - Theory\nP - Practical")
+        time.sleep(20)
+        exam()
 
     status = 0
     while status == 0:
@@ -905,7 +948,7 @@ def update_data():
     current = datetime.datetime.now()
     u_month = current.month
     u_date = current.day
-    if u_month == 3 and u_date == 9:
+    if u_month == 2 and u_date == 23:
 
         # Updating the count.txt files which contain counts of student in each course.
         for i in count:
@@ -943,7 +986,7 @@ def update_data():
             with open(third, 'a') as w:
                 w.writelines(lines)
 
-            # Opening secong year csv file and deleting the existing data and copying the data from first year csv file
+            # Opening second year csv file and deleting the existing data and copying the data from first year csv file
             f = open(second, "w+")
             f.close()
 
