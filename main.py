@@ -1,4 +1,4 @@
-from OOPS_Project import Admission, Student
+from OOPS_Project import Admission, Student, Result
 import os
 import re
 import csv
@@ -20,7 +20,8 @@ count = ["counts\\bca.txt", "counts\\bca_in_analytics.txt", "counts\\bscpmcs.txt
          "counts\\bcom.txt", "counts\\bcom_finance.txt", "counts\\bcom_tourism.txt", "counts\\ba_english.txt", "counts\\ba_economics.txt", "counts\\ba_sociology.txt"]
 timeTable = {"BCA": ["time_table\\f_bca_tt.csv", "time_table\\s_bca_tt.csv", "time_table\\t_bca_tt.csv"], "BCA in Analytics": ["time_table\\f_bcaana_tt.csv", "time_table\\s_bcaana_tt.csv", "time_table\\t_bcaana_tt.csv"], "BSc(PMCS)": ["time_table\\f_bsc(pmcs)_tt.csv", "time_table\\s_bsc(pmcs)_tt.csv", "time_table\\t_bsc(pmcs)_tt.csv"], "BSc(PME)": ["time_table\\f_bsc(pme)_tt.csv", "time_table\\s_bsc(pme)_tt.csv", "time_table\\t_bsc(pme)_tt.csv"], "BBA": ["time_table\\f_bba_tt.csv", "time_table\\s_bba_tt.csv", "time_table\\t_bba_tt.csv"], "BBA in Aviation": ["time_table\\f_bbaava_tt.csv", "time_table\\s_bbaava_tt.csv", "time_table\\t_bbaava_tt.csv"], "BCom": [
     "time_table\\f_bcom_tt.csv", "time_table\\s_bcom_tt.csv", "time_table\\t_bcom_tt.csv"], "BCom in Finance": ["time_table\\f_bcomfin_tt.csv", "time_table\\s_bcomfin_tt.csv", "time_table\\t_bcomfin_tt.csv"], "BCom in Tourism": ["time_table\\f_bcomtou_tt.csv", "time_table\\s_bcomtou_tt.csv", "time_table\\t_bcomtou_tt.csv"], "BA in English": ["time_table\\f_baeng_tt.csv", "time_table\\s_baeng_tt.csv", "time_table\\t_baeng_tt.csv"], "BA in Sociology": ["time_table\\f_basoc_tt.csv", "time_table\\s_basoc_tt.csv", "time_table\\t_basoc_tt.csv"], "BA in Economics": ["time_table\\f_baeco_tt.csv", "time_table\\s_baeco_tt.csv", "time_table\\t_baeco_tt.csv"]}
-
+results = {"BCA": ["results\\f_bca_results.csv", "results\\s_bca_results.csv", "results\\t_bca_results.csv"], "BCA in Analytics": ["results\\f_bcaana_results.csv", "results\\s_bcaana_results.csv", "results\\t_bcaana_results.csv"], "BSc(PMCS)": ["results\\f_bsc(pmcs)_results.csv", "results\\s_bsc(pmcs)_results.csv", "results\\t_bsc(pmcs)_results.csv"], "BSc(PME)": ["results\\f_bsc(pme)_results.csv", "results\\s_bsc(pme)_results.csv", "results\\t_bsc(pme)_results.csv"], "BBA": ["results\\f_bba_results.csv", "results\\s_bba_results.csv", "results\\t_bba_results.csv"], "BBA in Aviation": ["results\\f_bbaava_results.csv", "results\\s_bbaava_results.csv", "results\\t_bbaava_results.csv"], "BCom": [
+    "results\\f_bcom_results.csv", "results\\s_bcom_results.csv", "results\\t_bcom_results.csv"], "BCom in Finance": ["results\\f_bcomfin_results.csv", "results\\s_bcomfin_results.csv", "results\\t_bcomfin_results.csv"], "BCom in Tourism": ["results\\f_bcomtou_results.csv", "results\\s_bcomtou_results.csv", "results\\t_bcomtou_results.csv"], "BA in English": ["results\\f_baeng_results.csv", "results\\s_baeng_results.csv", "results\\t_baeng_results.csv"], "BA in Sociology": ["results\\f_basoc_results.csv", "results\\s_basoc_results.csv", "results\\t_basoc_results.csv"], "BA in Economics": ["results\\f_baeco_results.csv", "results\\s_baeco_results.csv", "results\\t_baeco_results.csv"]}
 
 def main_menu():
     counter = 0
@@ -346,10 +347,10 @@ def admission():
         else:
             print(f"\n{m}")
             time.sleep(10)
-            with open("C:\\Users\\2145644\\OOPS Project\\counts\\appln_count.txt", 'r') as r:
+            with open("C:\\Users\\2145644\\OOPSProject\\counts\\appln_count.txt", 'r') as r:
                 count = int(r.read())
                 count -= 1
-            with open("C:\\Users\\2145644\\OOPS Project\\counts\\appln_count.txt", 'w+') as w:
+            with open("C:\\Users\\2145644\\OOPSProject\\counts\\appln_count.txt", 'w+') as w:
                 w.write(str(count))
             admission()
         document_submission(m, a)
@@ -395,7 +396,7 @@ def admission():
         clear()
         appln_no = []
         csv_file_reader = csv.reader(
-            open("C:\\Users\\2145644\\OOPS Project\\Data\\applications.csv", "r"))
+            open("C:\\Users\\2145644\\OOPSProject\\Data\\applications.csv", "r"))
         for row1 in csv_file_reader:
             if row1[0] == 'appno':
                 continue
@@ -419,7 +420,7 @@ def admission():
         row_pos = 0
         index = 0
         csv_file_reader2 = csv.reader(
-            open("C:\\Users\\2145644\\OOPS Project\\Data\\applications.csv", "r"))
+            open("C:\\Users\\2145644\\OOPSProject\\Data\\applications.csv", "r"))
         for row in csv_file_reader2:
             if row[0] == appno:
                 for i in range(len(row)):
@@ -632,7 +633,7 @@ def idcard():
         year = datetime.date.today().year
         appln_no = []
         csv_file_reader = csv.reader(
-            open("C:\\Users\\2145644\\OOPS Project\\Data\\applications.csv", "r"))
+            open("C:\\Users\\2145644\\OOPSProject\\Data\\applications.csv", "r"))
         for row1 in csv_file_reader:
             appln_no.append(row1[0])
 
@@ -660,7 +661,7 @@ def idcard():
         time.sleep(5)
 
         csv_file_reader3 = csv.reader(
-            open("C:\\Users\\2145644\\OOPS Project\\Data\\applications.csv", "r"))
+            open("C:\\Users\\2145644\\OOPSProject\\Data\\applications.csv", "r"))
         details = []
         details.append(appno)
         for row in csv_file_reader3:
@@ -706,15 +707,15 @@ def idcard():
                 writer.writerows(data)
                 print(f'''\n\nID card generated
 ----------------------------------------
-Name : {a.get_name()}                          
+Name : {a.get_name()}
 
-Register No. : {a.get_reg_no()}                    
-                    
+Register No. : {a.get_reg_no()}
+
 Class : {a.get_course()}
 
 Phone : {a.get_phoneno()}
 
-Email : {a.get_emailid()} 
+Email : {a.get_emailid()}
 ----------------------------------------''')
             time.sleep(20)
             main_menu()
@@ -798,17 +799,17 @@ Email : {a.get_emailid()}
             time.sleep(5)
             idcard()
         else:
-            print(f'''\n\nID card 
+            print(f'''\n\nID card
 ----------------------------------------
-Name : {details[2]}                          
+Name : {details[2]}
 
-Register No. : {details[1]}                    
-                    
+Register No. : {details[1]}
+
 Class : {details[8]}
 
 Phone : {details[5]}
 
-Email : {details[4]} 
+Email : {details[4]}
 ----------------------------------------''')
             time.sleep(20)
             idcard()
@@ -897,8 +898,8 @@ def exam():
                 csvFile = timeTable[course][2]
                 year = 1
             else:
-                print("\nInvalid input")    
-        print(csvFile)
+                print("\nInvalid input")
+
         csv_file_reader4 = csv.reader(open(csvFile, "r"))
         exam_code = []
         exam_name = []
@@ -915,13 +916,116 @@ def exam():
             exam_duration.append(rows[4])
             exam_marks.append(rows[5])
 
-        print('''\n   Date    | Exam Code |  Exam Type  |  Exam Duration |  Total Marks  | Exam Name            
+        print('''\n\n   Date    | Exam Code |  Exam Type  |  Exam Duration |  Total Marks  | Exam Name
 --------------------------------------------------------------------------------------------''')
         for i in range(1, len(exam_code)):
             print(
                 f"{exam_date[i]} |  {exam_code[i]}   |     {exam_type[i]}       |   {exam_duration[i]}   |      {exam_marks[i]}      | {exam_name[i]}                  ")
         print("\nT - Theory\nP - Practical")
         time.sleep(20)
+        exam()
+
+    def check_results():
+        clear()
+        re = 0
+        print("Enter 0 to go back\nSelect your stream\n1. BCA\n2. BCA in Analytics\n3. BSc(PMCS)\n4. BSc(PME)\n5. BBA\n6. BBA in Aviation\n7. BCom\n8. BCom in Finance\n9. BCom in Tourism\n10. BA in English\n11. BA in Sociology\n12. BA in Economics")
+        while re == 0:
+            stream = input("\nEnter option number: ")
+            if stream == "0":
+                exam()
+            elif stream == "1":
+                course = "BCA"
+                re = 1
+            elif stream == "2":
+                course = "BCA in Analytics"
+                re = 1
+            elif stream == "3":
+                course = "BSc(PMCS)"
+                re = 1
+            elif stream == "4":
+                course = "BSc(PME)"
+                re = 1
+            elif stream == "5":
+                course = "BBA"
+                re = 1
+            elif stream == "6":
+                course = "BBA in Aviation"
+                re = 1
+            elif stream == "7":
+                course = "BCom"
+                re = 1
+            elif stream == "8":
+                course = "BCom in Finance"
+                re = 1
+            elif stream == "9":
+                course = "BCom in Tourism"
+                re = 1
+            elif stream == "10":
+                course = "BA in English"
+                re = 1
+            elif stream == "11":
+                course = "BA in Sociology"
+                re = 1
+            elif stream == "12":
+                course = "BA in Erenomics"
+                re = 1
+            else:
+                print("Invalid input")
+
+        print("\nEnter your current year\n1. 1st year\n2. 2nd year\n3. 3rd year")
+        year = 0
+        while year == 0:
+            inp2 = input("Enter option number : ")
+            if inp2 == "1":
+                csvFile = results[course][0]
+                year = 1
+            elif inp2 == "2":
+                csvFile = results[course][1]
+                year = 1
+            elif inp2 == "3":
+                csvFile = results[course][2]
+                year = 1
+            else:
+                print("\nInvalid input")  
+        register_no = input("\nEnter your register number: ")
+
+        csv_file_reader5 = csv.reader(open(csvFile, "r"))
+        subjects = []
+        for row in csv_file_reader5:
+            subjects = row
+            break
+    
+        marks = []
+        for row in csv_file_reader5:
+            if row[0] == register_no:
+                marks = row
+                break
+            
+        if len(marks) == 0:
+            print("\nRegisted Number doesn't exist.")
+            time.sleep(10)
+            exam()
+        
+        result = Result(subjects,marks)
+        detailedInfo = result.get_subjectsAndScoredMarks()
+        totalMarksList = result.get_total_marks_list()
+        totalMarks = result.get_total_marks()
+        scoredMarks = result.get_scoredMarks()
+        result.calculateNGrade()
+        percentage = result.get_percentatage()
+        grade = result.get_grade()
+
+        index = 0
+        clear()
+        print("Your Result".center(133,"-"))
+        print("\n{:<40} {:<21} {:<23} {}".format('Subject', 'Marks Scored', 'Total Marks','Result'))
+        for s,ms in detailedInfo.items():
+            print("{:<45} {:<20} {:<20} {}".format(s, ms[0], totalMarksList[index], ms[1]))
+            index += 1
+        print("\nTotal Marks Scored - {} / {}".format( scoredMarks,totalMarks))
+        print("\nPercentage - {}".format(percentage))
+        print("\nGrade - {}".format(grade))
+        time.sleep(30)
         exam()
 
     status = 0
@@ -938,7 +1042,7 @@ def exam():
     if ans == "1":
         check_time_table()
     elif ans == "2":
-        # check_results()
+        check_results()
         pass
     elif ans == "3":
         main_menu()
@@ -956,7 +1060,7 @@ def update_data():
                 w.write("1")
 
         # Updating the total number of seats available to full capacity.
-        filename = "C:\\Users\\2145644\\OOPS Project\\Data\\seat_count.csv"
+        filename = "C:\\Users\\2145644\\OOPSProject\\Data\\seat_count.csv"
         f = open(filename, "w+")
         f.close()
 
@@ -965,7 +1069,7 @@ def update_data():
         updated_seat_count = [100, 70, 60, 60,
                               100, 70, 100, 70, 70, 70, 70, 70]
 
-        with open("C:\\Users\\2145644\\OOPS Project\\Data\\seat_count.csv", "a", newline="") as fp:
+        with open("C:\\Users\\2145644\\OOPSProject\\Data\\seat_count.csv", "a", newline="") as fp:
             wr = writer(fp)
             wr.writerow(columns)
             wr.writerow(updated_seat_count)

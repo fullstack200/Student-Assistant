@@ -1,19 +1,18 @@
 # Python program that provides various functionalities which a college requires using OOPS concepts.
-from select import select
+from this import d
 import pandas as pd
 import datetime
 import csv
 import time
+
 # Admission class
-
-
 class Admission:
     '''Admission class is the class which handles the process of admission of a student based on the eligibity criteria'''
-    with open("C:\\Users\\2145644\\OOPS Project\\counts\\appln_count.txt", 'r') as f:
+    with open("C:\\Users\\2145644\\OOPSProject\\counts\\appln_count.txt", 'r') as f:
         counter = int(f.read())
 
     # Courses available in college.
-    df = pd.read_csv("C:\\Users\\2145644\\OOPS Project\\Data\\seat_count.csv")
+    df = pd.read_csv("C:\\Users\\2145644\\OOPSProject\\Data\\seat_count.csv")
     courses = {"Science": [["BCA", df.loc[0][0], 100000], ["BCA in Analytics", df.loc[0][1], 120000], ["BSc(PMCS)", df.loc[0][2], 80000], ["BSc(PME)", df.loc[0][3], 80000]], "Commerce": [["BBA", df.loc[0][4], 100000], ["BBA in Aviation", df.loc[0][5], 120000], [
         "BCom", df.loc[0][6], 80000], ["BCom in Finance", df.loc[0][7], 100000], ["BCom in Tourism", df.loc[0][8], 100000]], "Arts": [["BA in English", df.loc[0][9], 80000], ["BA in Sociology", df.loc[0][10], 80000], ["BA in Economics", df.loc[0][11], 80000]]}
 
@@ -22,7 +21,7 @@ class Admission:
         current = datetime.date.today()
         current_year = current.year
         self.__appno = str(current_year) + "APPLN" + str(Admission.counter)
-        with open("C:\\Users\\2145644\\OOPS Project\\counts\\appln_count.txt", 'w') as f:
+        with open("C:\\Users\\2145644\\OOPSProject\\counts\\appln_count.txt", 'w') as f:
             Admission.counter += 1
             f.write(str(Admission.counter))
 
@@ -295,7 +294,7 @@ class Admission:
     # Collects fee payement input from the user.
     def fee_payment(self):
         fee_to_be_paid = 0
-        df = pd.read_csv("C:\\Users\\2145644\\OOPS Project\\Data\\seat_count.csv")
+        df = pd.read_csv("C:\\Users\\2145644\\OOPSProject\\Data\\seat_count.csv")
 
         course_info = Admission.courses
         course_opted = self.get_course_opting_for()
@@ -337,7 +336,7 @@ class Admission:
                             counter = 1
                         else:
                             print("\nInvalid input")
-                        df.to_csv("C:\\Users\\2145644\\OOPS Project\\Data\\seat_count.csv", index=False)
+                        df.to_csv("C:\\Users\\2145644\\OOPSProject\\Data\\seat_count.csv", index=False)
                     
 
 # Student class
@@ -443,7 +442,77 @@ class Student():
     def display_ID(self):
         pass
 
+#Exam Class - Calculates the marks of the students
+class Result:
+    def __init__(self,subjects,marks):
+        # Removing the unnecessary data.
+        marks.pop(0)
+        subjects.pop(0)
 
+        #Dictionary with subjects and scored marks
+        self.subjectsAndScoredMarks = {} ############################################################
+        for i in range(0,len(marks)):
+            if "Theory" in subjects[i]:
+                if int(marks[i]) > 35:
+                    self.subjectsAndScoredMarks.update({subjects[i]:[marks[i],"Pass"]})
+                else:
+                     self.subjectsAndScoredMarks.update({subjects[i]:[marks[i],"Fail"]})
+            elif "Practical" in subjects[i]:
+                if  int(marks[i]) > 20:
+                    self.subjectsAndScoredMarks.update({subjects[i]:[marks[i],"Pass"]})
+                else:
+                    self.subjectsAndScoredMarks.update({subjects[i]:[marks[i],"Fail"]})
+
+       # Total marks are incremented based on the subjwct type(Theory/Practical).
+        self.totalMarksList = [] #####################################################################
+        for s in subjects:
+            if "Theory" in s:
+                self.totalMarksList.append(100)
+            elif "Practical" in s :
+                self.totalMarksList.append(50)
+        self.totalMarks = sum(self.totalMarksList)
+
+        # Sum of marks scored by student, percentage, and grade.
+        self.scoredMarks = 0 ##########################################################################
+        for m in marks:
+            self.scoredMarks += int(m)
+        self.percentage = 0 ###########################################################################
+        self.grade = "" ###############################################################################
+        
+    def calculateNGrade(self):
+        self.percentage = int((self.scoredMarks / self.totalMarks) * 100)
+        if self.percentage > 85 and self.percentage < 100:
+            self.grade = "A+"
+        elif self.percentage > 75  and self.percentage < 85:
+            self.grade = "A"
+        elif self.percentage > 65 and self.percentage < 75:
+            self.grade = "B+"
+        elif self.percentage > 55 and self.percentage < 65:
+            self.grade = "B"
+        elif self.percentage > 50 and self.percentage < 55:
+            self.grade = "C+"
+        elif self.percentage > 45  and self.percentage < 50:
+            self.grade = "C"
+        else:
+            self.grade = "F"
+            
+    def get_subjectsAndScoredMarks(self):
+        return self.subjectsAndScoredMarks
+
+    def get_total_marks_list(self):
+        return self.totalMarksList
+
+    def get_total_marks(self):
+        return self.totalMarks
+
+    def get_scoredMarks(self):
+        return self.scoredMarks
+
+    def get_percentatage(self):
+        return self.percentage
+    
+    def get_grade(self):
+        return self.grade
 
 
     

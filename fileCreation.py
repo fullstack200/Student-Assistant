@@ -6,4 +6,5 @@ for i in fileNames:
     with open(i, 'a') as fp:
         wr = writer(fp)
         wr.writerow(columns)
+
         fp.close()
