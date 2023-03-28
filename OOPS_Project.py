@@ -1,4 +1,5 @@
 # Python program that provides various functionalities which a college requires using OOPS concepts.
+from operator import sub
 from this import d
 import pandas as pd
 import datetime
@@ -515,4 +516,3 @@ class Result:
         return self.grade
 
 
-    

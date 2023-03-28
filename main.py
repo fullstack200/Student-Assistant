@@ -22,6 +22,9 @@ timeTable = {"BCA": ["time_table\\f_bca_tt.csv", "time_table\\s_bca_tt.csv", "ti
     "time_table\\f_bcom_tt.csv", "time_table\\s_bcom_tt.csv", "time_table\\t_bcom_tt.csv"], "BCom in Finance": ["time_table\\f_bcomfin_tt.csv", "time_table\\s_bcomfin_tt.csv", "time_table\\t_bcomfin_tt.csv"], "BCom in Tourism": ["time_table\\f_bcomtou_tt.csv", "time_table\\s_bcomtou_tt.csv", "time_table\\t_bcomtou_tt.csv"], "BA in English": ["time_table\\f_baeng_tt.csv", "time_table\\s_baeng_tt.csv", "time_table\\t_baeng_tt.csv"], "BA in Sociology": ["time_table\\f_basoc_tt.csv", "time_table\\s_basoc_tt.csv", "time_table\\t_basoc_tt.csv"], "BA in Economics": ["time_table\\f_baeco_tt.csv", "time_table\\s_baeco_tt.csv", "time_table\\t_baeco_tt.csv"]}
 results = {"BCA": ["results\\f_bca_results.csv", "results\\s_bca_results.csv", "results\\t_bca_results.csv"], "BCA in Analytics": ["results\\f_bcaana_results.csv", "results\\s_bcaana_results.csv", "results\\t_bcaana_results.csv"], "BSc(PMCS)": ["results\\f_bsc(pmcs)_results.csv", "results\\s_bsc(pmcs)_results.csv", "results\\t_bsc(pmcs)_results.csv"], "BSc(PME)": ["results\\f_bsc(pme)_results.csv", "results\\s_bsc(pme)_results.csv", "results\\t_bsc(pme)_results.csv"], "BBA": ["results\\f_bba_results.csv", "results\\s_bba_results.csv", "results\\t_bba_results.csv"], "BBA in Aviation": ["results\\f_bbaava_results.csv", "results\\s_bbaava_results.csv", "results\\t_bbaava_results.csv"], "BCom": [
     "results\\f_bcom_results.csv", "results\\s_bcom_results.csv", "results\\t_bcom_results.csv"], "BCom in Finance": ["results\\f_bcomfin_results.csv", "results\\s_bcomfin_results.csv", "results\\t_bcomfin_results.csv"], "BCom in Tourism": ["results\\f_bcomtou_results.csv", "results\\s_bcomtou_results.csv", "results\\t_bcomtou_results.csv"], "BA in English": ["results\\f_baeng_results.csv", "results\\s_baeng_results.csv", "results\\t_baeng_results.csv"], "BA in Sociology": ["results\\f_basoc_results.csv", "results\\s_basoc_results.csv", "results\\t_basoc_results.csv"], "BA in Economics": ["results\\f_baeco_results.csv", "results\\s_baeco_results.csv", "results\\t_baeco_results.csv"]}
+attendance = {"BCA": ["attendance\\f_bca_attendance.csv", "attendance\\s_bca_attendance.csv", "attendance\\t_bca_attendance.csv"], "BCA in Analytics": ["attendance\\f_bcaana_attendance.csv", "attendance\\s_bcaana_attendance.csv", "attendance\\t_bcaana_attendance.csv"], "BSc(PMCS)": ["attendance\\f_bsc(pmcs)_attendance.csv", "attendance\\s_bsc(pmcs)_attendance.csv", "attendance\\t_bsc(pmcs)_attendance.csv"], "BSc(PME)": ["attendance\\f_bsc(pme)_attendance.csv", "attendance\\s_bsc(pme)_attendance.csv", "attendance\\t_bsc(pme)_attendance.csv"], "BBA": ["attendance\\f_bba_attendance.csv", "attendance\\s_bba_attendance.csv", "attendance\\t_bba_attendance.csv"], "BBA in Aviation": ["attendance\\f_bbaava_attendance.csv", "attendance\\s_bbaava_attendance.csv", "attendance\\t_bbaava_attendance.csv"], "BCom": [
+    "attendance\\f_bcom_attendance.csv", "attendance\\s_bcom_attendance.csv", "attendance\\t_bcom_attendance.csv"], "BCom in Finance": ["attendance\\f_bcomfin_attendance.csv", "attendance\\s_bcomfin_attendance.csv", "attendance\\t_bcomfin_attendance.csv"], "BCom in Tourism": ["attendance\\f_bcomtou_attendance.csv", "attendance\\s_bcomtou_attendance.csv", "attendance\\t_bcomtou_attendance.csv"], "BA in English": ["attendance\\f_baeng_attendance.csv", "attendance\\s_baeng_attendance.csv", "attendance\\t_baeng_attendance.csv"], "BA in Sociology": ["attendance\\f_basoc_attendance.csv", "attendance\\s_basoc_attendance.csv", "attendance\\t_basoc_attendance.csv"], "BA in Economics": ["attendance\\f_baeco_attendance.csv", "attendance\\s_baeco_attendance.csv", "attendance\\t_baeco_attendance.csv"]}
+
 
 def main_menu():
     counter = 0
@@ -46,7 +49,7 @@ def response(n):
     elif n == "3":
         exam()
     elif n == "4":
-        pass
+        attendence()
     elif n == "5":
         pass
     elif n == "6":
@@ -888,7 +891,9 @@ def exam():
         year = 0
         while year == 0:
             inp2 = input("Enter option number : ")
-            if inp2 == "1":
+            if inp2 == "0":
+                exam()
+            elif inp2 == "1":
                 csvFile = timeTable[course][0]
                 year = 1
             elif inp2 == "2":
@@ -976,7 +981,9 @@ def exam():
         year = 0
         while year == 0:
             inp2 = input("Enter option number : ")
-            if inp2 == "1":
+            if inp2 == "0":
+                exam()
+            elif inp2 == "1":
                 csvFile = results[course][0]
                 year = 1
             elif inp2 == "2":
@@ -986,7 +993,7 @@ def exam():
                 csvFile = results[course][2]
                 year = 1
             else:
-                print("\nInvalid input")  
+                print("\nInvalid input")
         register_no = input("\nEnter your register number: ")
 
         csv_file_reader5 = csv.reader(open(csvFile, "r"))
@@ -994,19 +1001,21 @@ def exam():
         for row in csv_file_reader5:
             subjects = row
             break
-    
+
         marks = []
         for row in csv_file_reader5:
-            if row[0] == register_no:
+            if register_no == "0":
+                exam()
+            elif row[0] == register_no:
                 marks = row
                 break
-            
+
         if len(marks) == 0:
             print("\nRegisted Number doesn't exist.")
             time.sleep(10)
             exam()
-        
-        result = Result(subjects,marks)
+
+        result = Result(subjects, marks)
         detailedInfo = result.get_subjectsAndScoredMarks()
         totalMarksList = result.get_total_marks_list()
         totalMarks = result.get_total_marks()
@@ -1017,12 +1026,15 @@ def exam():
 
         index = 0
         clear()
-        print("Your Result".center(133,"-"))
-        print("\n{:<40} {:<21} {:<23} {}".format('Subject', 'Marks Scored', 'Total Marks','Result'))
-        for s,ms in detailedInfo.items():
-            print("{:<45} {:<20} {:<20} {}".format(s, ms[0], totalMarksList[index], ms[1]))
+        print("Your Result".center(133, "-"))
+        print("\n{:<40} {:<21} {:<23} {}".format(
+            'Subject', 'Marks Scored', 'Total Marks', 'Result'))
+        print("------------------------------------------------------------------------------------------------------------------------------")
+        for s, ms in detailedInfo.items():
+            print("{:<45} {:<20} {:<20} {}".format(
+                s, ms[0], totalMarksList[index], ms[1]))
             index += 1
-        print("\nTotal Marks Scored - {} / {}".format( scoredMarks,totalMarks))
+        print("\nTotal Marks Scored - {} / {}".format(scoredMarks, totalMarks))
         print("\nPercentage - {}".format(percentage))
         print("\nGrade - {}".format(grade))
         time.sleep(30)
@@ -1048,6 +1060,107 @@ def exam():
         main_menu()
 
 
+def attendence():
+    clear()
+    print(" Attendence Page ".center(133, '-'))
+    at = 0
+    print("Enter 0 to go back\nSelect your stream\n1. BCA\n2. BCA in Analytics\n3. BSc(PMCS)\n4. BSc(PME)\n5. BBA\n6. BBA in Aviation\n7. BCom\n8. BCom in Finance\n9. BCom in Tourism\n10. BA in English\n11. BA in Sociology\n12. BA in Economics")
+    while at == 0:
+        stream = input("\nEnter option number: ")
+        if stream == "0":
+            main_menu()
+        elif stream == "1":
+            course = "BCA"
+            at = 1
+        elif stream == "2":
+            course = "BCA in Analytics"
+            at = 1
+        elif stream == "3":
+            course = "BSc(PMCS)"
+            at = 1
+        elif stream == "4":
+            course = "BSc(PME)"
+            at = 1
+        elif stream == "5":
+            course = "BBA"
+            at = 1
+        elif stream == "6":
+            course = "BBA in Aviation"
+            at = 1
+        elif stream == "7":
+            course = "BCom"
+            at = 1
+        elif stream == "8":
+            course = "BCom in Finance"
+            at = 1
+        elif stream == "9":
+            course = "BCom in Tourism"
+            at = 1
+        elif stream == "10":
+            course = "BA in English"
+            at = 1
+        elif stream == "11":
+            course = "BA in Sociology"
+            at = 1
+        elif stream == "12":
+            course = "BA in Eatnomics"
+            at = 1
+        else:
+            print("Invalid input")
+    print("\nEnter your current year\n1. 1st year\n2. 2nd year\n3. 3rd year")
+    year = 0
+    while year == 0:
+        inp2 = input("Enter option number : ")
+        if inp2 == "0":
+            main_menu()
+        elif inp2 == "1":
+            csvFile = attendance[course][0]
+            year = 1
+        elif inp2 == "2":
+            csvFile = attendance[course][1]
+            year = 1
+        elif inp2 == "3":
+            csvFile = attendance[course][2]
+            year = 1
+        else:
+            print("\nInvalid input")
+    
+    register_no = input("\nEnter your register number: ")
+    csv_file_reader6 = csv.reader(open(csvFile, "r"))
+
+    noOfClasses = []
+    for row in csv_file_reader6:
+        if register_no == "0":
+            main_menu()
+        elif row[0] == register_no:
+            noOfClasses = row
+            break
+    
+    if len(noOfClasses) == 0:
+        print("\nRegisted Number doesn't exist.")
+        time.sleep(10)
+        main_menu()
+    else:
+        noOfClasses.pop(0)
+        presentDays = noOfClasses[0]
+        absentDays = noOfClasses[1]
+        totalNoOfDays = noOfClasses[2]
+    
+    print("Your Attendance".center(150, "-"))
+    print("\n{:<20} {:<20} {:<23}".format(
+            'Present Days', 'Absent Days', 'Total No. of Days'))
+    print("-----------------------------------------------------------")
+    print("{:<20} {:<20} {:<23}".format(presentDays,absentDays,totalNoOfDays))
+    percentage = int(presentDays) / int(totalNoOfDays) * 100
+    print("\nPercentage - {}".format(percentage))
+    if percentage >= 85:
+        print("\nAttendance percentage is maintained.")
+    elif percentage < 85 and percentage > 75:
+        print("\nPlease maintain your attendance percentage to avoid remidial classes.")
+    elif percentage < 75:
+        print("\nAttendance percentage doesn't meet the eligiblility criteria to appear for examinations.")
+    time.sleep(20)
+    main_menu()
 def update_data():
     current = datetime.datetime.now()
     u_month = current.month
