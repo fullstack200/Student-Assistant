@@ -1,2 +1,3 @@
-appno,reg_no,name,dob,emailid,phoneno,address,stream,course
-2023APPLN50,23BCA1,Fahad Ahmed,31/10/2000,23BCA1@kristujayanti.com,9513206704,"Hanifiya Mosque Road, Kushalnagar, Bangalore 560045",Science,BCA
+appno,reg_no,name,dob,emailid,phoneno,address,stream,course
+2023APPLN50,23BCA1,Fahad Ahmed,31-10-2000,23BCA1@kristujayanti.com,9513206704,"Hanifiya Mosque Road, Kushalnagar, Bangalore 560045",Science,BCA
+2023APPLN51,23BCA2,Fahad Ahmed,01-11-2000,23BCA2@kristujayanti.com,9513206705,"Hanifiya Mosque Road, Kushalnagar, Bangalore 560046",Science,BCA

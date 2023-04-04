@@ -1,8 +1,7 @@
 # Python program that provides various functionalities which a college requires using OOPS concepts.
-from operator import sub
-from this import d
 import pandas as pd
-import datetime
+from datetime import *
+from datetime import timedelta
 import csv
 import time
 
@@ -443,7 +442,7 @@ class Student():
     def display_ID(self):
         pass
 
-#Exam Class - Calculates the marks of the students
+# Exam Class - Calculates the marks of the students
 class Result:
     def __init__(self,subjects,marks):
         # Removing the unnecessary data.
@@ -515,4 +514,71 @@ class Result:
     def get_grade(self):
         return self.grade
 
+# Library Class
+class Library:
+    def __init__(self,regNo,bookNo):
+        self.regNo = regNo
+        self.bookNo = bookNo
+        csv_file_reader9 = csv.reader(
+            open("C:\\Users\\2145644\\OOPSProject\\library\\libraryBooks.csv", "r"))
+        for row in csv_file_reader9:
+            if row[0] == bookNo:
+                self.bookName = row[1]
+                break
+            else:
+                self.bookName = None
+        self.borrowDate = date.today()
+        self.returnDate = self.borrowDate + timedelta(days = 3)
 
+    def setBorrowDate(self,date):
+        self.borrowDate = date
+
+    def setReturnDate(self,date):
+        self.returnDate = date
+
+    def enterData(self):
+        data = [self.regNo,self.bookNo,self.bookName,self.borrowDate,self.returnDate]
+        with open('library\\library.csv', 'a', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow(data)
+            
+    def calculateDays(self):
+        dateToday = str(date.today())
+        dateToday = datetime.strptime(dateToday,"%Y-%m-%d")
+        if dateToday > self.returnDate:
+            noOfDays = 0
+            lateFee = 0
+            while dateToday > self.returnDate:
+                noOfDays += 1
+                lateFee += 10
+                self.returnDate += timedelta(days=1)
+            print("\nYou are charged with late fee of {} of {} days. Please pay the amount to Librarian.".format(lateFee,noOfDays))
+            time.sleep(2)
+            lib = 0
+            while lib == 0:
+                resp = input("\nEnter Y to pay the amount : ")
+                if resp.upper() == "Y":
+                    print("\nThank you for availing the library services. Do visit next time.")
+                    time.sleep(2)
+                    csv_file_reader1 = csv.reader(
+                    open("C:\\Users\\2145644\\OOPSProject\\library\\library.csv", "r"))
+                    lib = 1
+                else:
+                    print("\nInvalid input")
+        else:
+            print("\nNo late fee charges applicable. Thank you for returning the book before due date. Do visit next time.")
+             
+        index = -1
+        csv_file_reader1 = csv.reader(
+                    open("C:\\Users\\2145644\\OOPSProject\\library\\library.csv", "r"))
+        for row in csv_file_reader1:
+            if row[0] == self.regNo and row[1] == self.bookNo:
+                break
+            else:
+                index += 1
+        
+        df = pd.read_csv('library\library.csv')
+        df.drop([index],inplace=True)
+        df.to_csv("library\\library.csv", index=False)
+       
+         

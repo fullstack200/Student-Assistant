@@ -1,11 +1,11 @@
-from OOPS_Project import Admission, Student, Result
+from OOPS_Project import Admission, Student, Result, Library
 import os
 import re
 import csv
 from csv import writer
 import time
 import pandas as pd
-import datetime
+from datetime import datetime, timedelta
 
 
 def clear(): return os.system('cls')
@@ -51,7 +51,7 @@ def response(n):
     elif n == "4":
         attendence()
     elif n == "5":
-        pass
+        library()
     elif n == "6":
         pass
     elif n == "7":
@@ -1145,8 +1145,8 @@ def attendence():
         presentDays = noOfClasses[0]
         absentDays = noOfClasses[1]
         totalNoOfDays = noOfClasses[2]
-    
-    print("Your Attendance".center(150, "-"))
+    clear()
+    print("Your Attendance".center(146, "-"))
     print("\n{:<20} {:<20} {:<23}".format(
             'Present Days', 'Absent Days', 'Total No. of Days'))
     print("-----------------------------------------------------------")
@@ -1161,8 +1161,229 @@ def attendence():
         print("\nAttendance percentage doesn't meet the eligiblility criteria to appear for examinations.")
     time.sleep(20)
     main_menu()
+
+def library():
+    def borrow():
+        clear()
+        print("Welcome to our Library".center(100,"-"))
+        l1 = 0
+        print("Enter 0 to go back\nSelect your stream\n1. BCA\n2. BCA in Analytics\n3. BSc(PMCS)\n4. BSc(PME)\n5. BBA\n6. BBA in Aviation\n7. BCom\n8. BCom in Finance\n9. BCom in Tourism\n10. BA in English\n11. BA in Sociology\n12. BA in Economics")
+        while l1 == 0:
+            stream = input("\nEnter option number: ")
+            if stream == "0":
+                main_menu()
+            elif stream == "1":
+                course = "BCA"
+                l1 = 1
+            elif stream == "2":
+                course = "BCA in Analytics"
+                l1 = 1
+            elif stream == "3":
+                course = "BSc(PMCS)"
+                l1 = 1
+            elif stream == "4":
+                course = "BSc(PME)"
+                l1 = 1
+            elif stream == "5":
+                course = "BBA"
+                l1 = 1
+            elif stream == "6":
+                course = "BBA in Aviation"
+                l1 = 1
+            elif stream == "7":
+                course = "BCom"
+                l1 = 1
+            elif stream == "8":
+                course = "BCom in Finance"
+                l1 = 1
+            elif stream == "9":
+                course = "BCom in Tourism"
+                l1 = 1
+            elif stream == "10":
+                course = "BA in English"
+                l1 = 1
+            elif stream == "11":
+                course = "BA in Sociology"
+                l1 = 1
+            elif stream == "12":
+                course = "BA in Eatnomics"
+                l1 = 1
+            else:
+                print("Invalid input")
+        print("\nEnter your current year\n1. 1st year\n2. 2nd year\n3. 3rd year")
+        year = 0
+        while year == 0:
+            inp2 = input("Enter option number : ")
+            if inp2 == "0":
+               library()
+            elif inp2 == "1":
+                csvFile = data[course][0]
+                year = 1
+            elif inp2 == "2":
+                csvFile = data[course][1]
+                year = 1
+            elif inp2 == "3":
+                csvFile = data[course][2]
+                year = 1
+            else:
+                print("\nInvalid input")
+
+        regNo = input("\nEnter your Register Number : ")
+        csv_file_reader6= csv.reader(open(csvFile, "r"))
+        for row in csv_file_reader6:
+            if row[1] == regNo:
+                break
+        else:
+            print("\nRegister Number doesn't exist.")
+            time.sleep(5)
+            borrow()
+
+        bookNo = input("\nEnter the book ISBN Number : ")
+        print("\nPlease wait as we process your request...")
+        time.sleep(5)
+        csv_file_reader7 =  csv.reader(open("library/library.csv", "r"))
+        booksTaken = []
+        for row in csv_file_reader7:
+            booksTaken.append(row[1])
+        if bookNo not in booksTaken:   
+            libBor = Library(regNo,bookNo)
+            if libBor.bookName == None:
+                print("\nEntered Book number is wrong. Please re-check.")
+                time.sleep(5)
+                library()
+            else:
+                libBor.enterData()
+                print("\nPlease note the details given below")
+                print("\n\nRegister Number : {}\nBook ISBN Number : {}\nBook Name : {}\nBorrow Date : {}\nReturn Date : {}".format(libBor.regNo,libBor.bookNo,libBor.bookName,libBor.borrowDate,libBor.returnDate))
+                print("\nDo return the book before due date to avoid late fee charges. Thank you for availing the library services. Do visit next time.")
+                time.sleep(10)
+                library()
+        else:
+            print("\nBook is already been taken by other student.")
+            time.sleep(5)
+            library()
+
+    def returnBook():
+        clear()
+        l2 = 0
+        print("Enter 0 to go back\nSelect your stream\n1. BCA\n2. BCA in Analytics\n3. BSc(PMCS)\n4. BSc(PME)\n5. BBA\n6. BBA in Aviation\n7. BCom\n8. BCom in Finance\n9. BCom in Tourism\n10. BA in English\n11. BA in Sociology\n12. BA in Economics")
+        while l2 == 0:
+            stream = input("Enter option number : ")
+            if stream == "0":
+                 library()
+            elif stream == "1":
+                course = "BCA"
+                l2 = 1
+            elif stream == "2":
+                course = "BCA in Analytics"
+                l2 = 1
+            elif stream == "3":
+                course = "BSc(PMCS)"
+                l2 = 1
+            elif stream == "4":
+                course = "BSc(PME)"
+                l2 = 1
+            elif stream == "5":
+                course = "BBA"
+                l2 = 1
+            elif stream == "6":
+                course = "BBA in Aviation"
+                l2 = 1
+            elif stream == "7":
+                course = "BCom"
+                l2 = 1
+            elif stream == "8":
+                course = "BCom in Finance"
+                l2 = 1
+            elif stream == "9":
+                course = "BCom in Tourism"
+                l2 = 1
+            elif stream == "10":
+                course = "BA in English"
+                l2 = 1
+            elif stream == "11":
+                course = "BA in Sociology"
+                l2 = 1
+            elif stream == "12":
+                course = "BA in Economics"
+                l2 = 1
+            else:
+                print("Invalid input")
+        year = 0
+        print("\nEnter your current year\n1. 1st year\n2. 2nd year\n3. 3rd year")
+        while year == 0:
+            inp2 = input("Enter option number : ")
+            if inp2 == "0":
+                library()
+            elif inp2 == "1":
+                csvFile = data[course][0]
+                year = 1
+            elif inp2 == "2":
+                csvFile = data[course][1]
+                year = 1
+            elif inp2 == "3":
+                csvFile = data[course][2]
+                year = 1
+            else:
+                print("\nInvalid input")
+        
+        regNo = input("\nEnter your Register Number : ")
+        csv_file_reader6= csv.reader(open(csvFile, "r"))
+        for row in csv_file_reader6:
+            if row[1] == regNo:
+                break
+        else:
+            print("\nRegister Number doesn't exist.")
+            time.sleep(5)
+            library()
+        
+        bookNo = input("\nEnter the book ISBN number : ")
+        csv_file_reader6= csv.reader(open("library\libraryBooks.csv", "r"))
+        for row in csv_file_reader6:
+            if row[0] == bookNo:
+                break
+        else:
+            print(f"\nBook with ISBN number {bookNo} doesn't exist.")
+            time.sleep(5)
+            library()
+        
+        csv_file_reader7 = csv.reader(open("library\library.csv"))
+        for row in csv_file_reader7:
+            if row[0] == regNo and row[1] == bookNo:
+                libRet = Library(regNo,row[1])
+                borrowDate = datetime.strptime(row[3],"%d-%m-%Y")
+                returnDate = datetime.strptime(row[4],"%d-%m-%Y")
+                libRet.setBorrowDate(borrowDate)
+                libRet.setReturnDate(returnDate)
+                libRet.calculateDays()
+                library()
+        else:
+            print("\nWe cannot find any record of your Register Number. Please re-check.")
+            time.sleep(5)
+            library()
+
+    clear()
+    print(" Library Center ".center(133, '-'))
+    print("Please select an option to proceed\n\n1. Borrow a book\n2. Return a book\n3. Go back")
+    lib = 0
+    while lib == 0:
+        resp = input("\nEnter the option number : ")
+        if resp == "1":
+            lib = 1
+            borrow()
+        elif resp == "2":
+            lib = 1
+            returnBook()
+        elif resp == "3":
+            lib = 1
+            main_menu()
+        else:
+            print("\nInvalid input")
+            time.sleep(2)
+
+
 def update_data():
-    current = datetime.datetime.now()
+    current = datetime.now()
     u_month = current.month
     u_date = current.day
     if u_month == 2 and u_date == 23:
