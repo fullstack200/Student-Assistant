@@ -26,6 +26,8 @@ attendance = {"BCA": ["attendance\\f_bca_attendance.csv", "attendance\\s_bca_att
     "attendance\\f_bcom_attendance.csv", "attendance\\s_bcom_attendance.csv", "attendance\\t_bcom_attendance.csv"], "BCom in Finance": ["attendance\\f_bcomfin_attendance.csv", "attendance\\s_bcomfin_attendance.csv", "attendance\\t_bcomfin_attendance.csv"], "BCom in Tourism": ["attendance\\f_bcomtou_attendance.csv", "attendance\\s_bcomtou_attendance.csv", "attendance\\t_bcomtou_attendance.csv"], "BA in English": ["attendance\\f_baeng_attendance.csv", "attendance\\s_baeng_attendance.csv", "attendance\\t_baeng_attendance.csv"], "BA in Sociology": ["attendance\\f_basoc_attendance.csv", "attendance\\s_basoc_attendance.csv", "attendance\\t_basoc_attendance.csv"], "BA in Economics": ["attendance\\f_baeco_attendance.csv", "attendance\\s_baeco_attendance.csv", "attendance\\t_baeco_attendance.csv"]}
 
 # The first function to be executed in program.
+
+
 def main_menu():
     counter = 0
     while counter == 0:
@@ -41,6 +43,8 @@ def main_menu():
             time.sleep(3)
 
 # Function which captures response and calls the appropriate function name.
+
+
 def response(n):
     if n == "1":
         admission()
@@ -1121,7 +1125,7 @@ def attendence():
             year = 1
         else:
             print("\nInvalid input")
-    
+
     register_no = input("\nEnter your register number: ")
     csv_file_reader6 = csv.reader(open(csvFile, "r"))
 
@@ -1132,7 +1136,7 @@ def attendence():
         elif row[0] == register_no:
             noOfClasses = row
             break
-    
+
     if len(noOfClasses) == 0:
         print("\nRegisted Number doesn't exist.")
         time.sleep(10)
@@ -1145,9 +1149,10 @@ def attendence():
     clear()
     print("Your Attendance".center(146, "-"))
     print("\n{:<20} {:<20} {:<23}".format(
-            'Present Days', 'Absent Days', 'Total No. of Days'))
+        'Present Days', 'Absent Days', 'Total No. of Days'))
     print("-----------------------------------------------------------")
-    print("{:<20} {:<20} {:<23}".format(presentDays,absentDays,totalNoOfDays))
+    print("{:<20} {:<20} {:<23}".format(
+        presentDays, absentDays, totalNoOfDays))
     percentage = int(presentDays) / int(totalNoOfDays) * 100
     print("\nPercentage - {}".format(percentage))
     if percentage >= 85:
@@ -1159,10 +1164,11 @@ def attendence():
     time.sleep(20)
     main_menu()
 
+
 def library():
     def borrow():
         clear()
-        print("Welcome to our Library".center(100,"-"))
+        print("Welcome to our Library".center(100, "-"))
         l1 = 0
         print("Enter 0 to go back\nSelect your stream\n1. BCA\n2. BCA in Analytics\n3. BSc(PMCS)\n4. BSc(PME)\n5. BBA\n6. BBA in Aviation\n7. BCom\n8. BCom in Finance\n9. BCom in Tourism\n10. BA in English\n11. BA in Sociology\n12. BA in Economics")
         while l1 == 0:
@@ -1212,7 +1218,7 @@ def library():
         while year == 0:
             inp2 = input("Enter option number : ")
             if inp2 == "0":
-               library()
+                library()
             elif inp2 == "1":
                 csvFile = data[course][0]
                 year = 1
@@ -1226,7 +1232,7 @@ def library():
                 print("\nInvalid input")
 
         regNo = input("\nEnter your Register Number : ")
-        csv_file_reader6= csv.reader(open(csvFile, "r"))
+        csv_file_reader6 = csv.reader(open(csvFile, "r"))
         for row in csv_file_reader6:
             if row[1] == regNo:
                 break
@@ -1238,12 +1244,12 @@ def library():
         bookNo = input("\nEnter the book ISBN Number : ")
         print("\nPlease wait as we process your request...")
         time.sleep(5)
-        csv_file_reader7 =  csv.reader(open("library/library.csv", "r"))
+        csv_file_reader7 = csv.reader(open("library/library.csv", "r"))
         booksTaken = []
         for row in csv_file_reader7:
             booksTaken.append(row[1])
-        if bookNo not in booksTaken:   
-            libBor = Library(regNo,bookNo)
+        if bookNo not in booksTaken:
+            libBor = Library(regNo, bookNo)
             if libBor.bookName == None:
                 print("\nEntered Book number is wrong. Please re-check.")
                 time.sleep(5)
@@ -1251,7 +1257,8 @@ def library():
             else:
                 libBor.enterData()
                 print("\nPlease note the details given below")
-                print("\n\nRegister Number : {}\nBook ISBN Number : {}\nBook Name : {}\nBorrow Date : {}\nReturn Date : {}".format(libBor.regNo,libBor.bookNo,libBor.bookName,libBor.borrowDate,libBor.returnDate))
+                print("\n\nRegister Number : {}\nBook ISBN Number : {}\nBook Name : {}\nBorrow Date : {}\nReturn Date : {}".format(
+                    libBor.regNo, libBor.bookNo, libBor.bookName, libBor.borrowDate, libBor.returnDate))
                 print("\nDo return the book before due date to avoid late fee charges. Thank you for availing the library services. Do visit next time.")
                 time.sleep(10)
                 library()
@@ -1267,7 +1274,7 @@ def library():
         while l2 == 0:
             stream = input("Enter option number : ")
             if stream == "0":
-                 library()
+                library()
             elif stream == "1":
                 course = "BCA"
                 l2 = 1
@@ -1323,9 +1330,9 @@ def library():
                 year = 1
             else:
                 print("\nInvalid input")
-        
+
         regNo = input("\nEnter your Register Number : ")
-        csv_file_reader6= csv.reader(open(csvFile, "r"))
+        csv_file_reader6 = csv.reader(open(csvFile, "r"))
         for row in csv_file_reader6:
             if row[1] == regNo:
                 break
@@ -1333,9 +1340,9 @@ def library():
             print("\nRegister Number doesn't exist.")
             time.sleep(5)
             library()
-        
+
         bookNo = input("\nEnter the book ISBN number : ")
-        csv_file_reader6= csv.reader(open("library\libraryBooks.csv", "r"))
+        csv_file_reader6 = csv.reader(open("library\libraryBooks.csv", "r"))
         for row in csv_file_reader6:
             if row[0] == bookNo:
                 break
@@ -1343,13 +1350,13 @@ def library():
             print(f"\nBook with ISBN number {bookNo} doesn't exist.")
             time.sleep(5)
             library()
-        
+
         csv_file_reader7 = csv.reader(open("library\library.csv"))
         for row in csv_file_reader7:
             if row[0] == regNo and row[1] == bookNo:
-                libRet = Library(regNo,row[1])
-                borrowDate = datetime.strptime(row[3],"%Y-%m-%d")
-                returnDate = datetime.strptime(row[4],"%Y-%m-%d")
+                libRet = Library(regNo, row[1])
+                borrowDate = datetime.strptime(row[3], "%Y-%m-%d")
+                returnDate = datetime.strptime(row[4], "%Y-%m-%d")
                 libRet.setBorrowDate(borrowDate)
                 libRet.setReturnDate(returnDate)
                 libRet.calculateDays()
@@ -1378,25 +1385,26 @@ def library():
             print("\nInvalid input")
             time.sleep(2)
 
+
 def coCurricular():
     clear()
-    print("Events".center(130,"-"))
+    print("Events".center(130, "-"))
     print("\nHere's a list of upcoming events in college")
     print("\n{:<30} {:<40} {:<13} {:<18} {}".format(
-            'Event Name', 'Event Location', 'Event Date', 'Event Timings','Event Coordinators'))
+        'Event Name', 'Event Location', 'Event Date', 'Event Timings', 'Event Coordinators'))
     print("------------------------------------------------------------------------------------------------------------------------------")
-    csvFilereader = csv.reader(open("coCurricular\coCurricularList.csv","r"))
+    csvFilereader = csv.reader(open("coCurricular\coCurricularList.csv", "r"))
     i = 1
     for row in csvFilereader:
         if i == 1:
-           i += 1
-           continue
+            i += 1
+            continue
         else:
             print("{:<30} {:<40} {:<13} {:<18} {}".format(
-            row[0], row[1], row[2], row[3], row[4]))
-
+                row[0], row[1], row[2], row[3], row[4]))
 
     time.sleep(20)
+
 
 def update_data():
     current = datetime.now()

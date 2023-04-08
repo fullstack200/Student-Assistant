@@ -6,6 +6,8 @@ import csv
 import time
 
 # Admission class
+
+
 class Admission:
     '''Admission class is the class which handles the process of admission of a student based on the eligibity criteria'''
     with open("C:\\Users\\2145644\\OOPSProject\\counts\\appln_count.txt", 'r') as f:
@@ -213,7 +215,7 @@ class Admission:
         elif previous_stream == "Commerce":
             if category == "General" and int(marks_scored) > 80:
                 return True
-            elif category == "SC|ST"  or category == "2A"  or category == "2B"  or category == "3B":
+            elif category == "SC|ST" or category == "2A" or category == "2B" or category == "3B":
                 if int(marks_scored) > 70:
                     return True
                 else:
@@ -227,15 +229,16 @@ class Admission:
                     return True
                 else:
                     return "Unfortunately, you are not eligible for this course based on the marks you have scored in your previous grade."
-    
 
     # Collects documents input from the user.
+
     def document_submission(self):
         documents = self.get_documents()
-    
+
         counter1 = 0
         while counter1 == 0:
-            tenth_marks_card = input("\nDo you have your 10th marks card? Y/N - ")
+            tenth_marks_card = input(
+                "\nDo you have your 10th marks card? Y/N - ")
             if tenth_marks_card.upper() == "Y":
                 documents["10th_marks_card"] = "Submitted"
                 counter1 = 1
@@ -246,7 +249,8 @@ class Admission:
                 print("\nInvalid input")
         counter2 = 0
         while counter2 == 0:
-            twelveth_marks_card = input("\nDo you have your 12th marks card? Y/N - ")
+            twelveth_marks_card = input(
+                "\nDo you have your 12th marks card? Y/N - ")
             if twelveth_marks_card.upper() == "Y":
                 documents["12th_marks_card"] = "Submitted"
                 counter2 = 1
@@ -268,7 +272,8 @@ class Admission:
                 print("\nInvalid input")
         counter4 = 0
         while counter4 == 0:
-            code_of_conduct = input("\nDo you have your code_of_conduct? Y/N - ")
+            code_of_conduct = input(
+                "\nDo you have your code_of_conduct? Y/N - ")
             if code_of_conduct.upper() == "Y":
                 documents["Code_of_conduct"] = "Submitted"
                 counter4 = 1
@@ -279,7 +284,8 @@ class Admission:
                 print("\nInvalid input")
         counter5 = 0
         while counter5 == 0:
-            transfer_cert = input("\nDo you have your transfer certificate? Y/N - ")
+            transfer_cert = input(
+                "\nDo you have your transfer certificate? Y/N - ")
             if transfer_cert.upper() == "Y":
                 documents["Transfer_certificate"] = "Submitted"
                 counter5 = 1
@@ -288,13 +294,14 @@ class Admission:
                 counter5 = 1
             else:
                 print("\nInvalid input")
-        
+
         return documents
 
     # Collects fee payement input from the user.
     def fee_payment(self):
         fee_to_be_paid = 0
-        df = pd.read_csv("C:\\Users\\2145644\\OOPSProject\\Data\\seat_count.csv")
+        df = pd.read_csv(
+            "C:\\Users\\2145644\\OOPSProject\\Data\\seat_count.csv")
 
         course_info = Admission.courses
         course_opted = self.get_course_opting_for()
@@ -336,17 +343,19 @@ class Admission:
                             counter = 1
                         else:
                             print("\nInvalid input")
-                        df.to_csv("C:\\Users\\2145644\\OOPSProject\\Data\\seat_count.csv", index=False)
-                    
+                        df.to_csv(
+                            "C:\\Users\\2145644\\OOPSProject\\Data\\seat_count.csv", index=False)
+
 
 # Student class
 class Student():
     '''Create Student ID based on the details collected in application.'''
-    def __init__(self,appno,name,dob,phoneno,address,stream,course):
+
+    def __init__(self, appno, name, dob, phoneno, address, stream, course):
         if course == "BCA":
-           txtFile = "counts\\bca.txt"
-           csvFile = "Data\\f_bca.csv"
-           initial = "BCA"
+            txtFile = "counts\\bca.txt"
+            csvFile = "Data\\f_bca.csv"
+            initial = "BCA"
         elif course == "BCA in Analytics":
             txtFile = "counts\\bca_in_analytics.txt"
             csvFile = "Data\\f_bca_ana.csv"
@@ -391,17 +400,17 @@ class Student():
             txtFile = "counts\\ba_sociology.txt"
             csvFile = "Data\\f_ba_soc.csv"
             initial = "BASOC"
-        
+
         with open(txtFile, 'r') as r:
             count = r.read()
             year = datetime.today().year
             self.__reg_no = str(year)[2] + str(year)[3] + initial + count
-        
-        with open(txtFile,'w') as w:
-           count = str(int(count) + 1)
-           w.write(count)
 
-        self.__appno = appno 
+        with open(txtFile, 'w') as w:
+            count = str(int(count) + 1)
+            w.write(count)
+
+        self.__appno = appno
         self.__name = name
         self.__dob = dob
         self.__emailid = self.__reg_no + "@kristujayanti.com"
@@ -411,7 +420,7 @@ class Student():
         self.__course = course
         self.__csv = csvFile
 
-    #GET methods
+    # GET methods
     def get_appno(self):
         return self.__appno
 
@@ -423,19 +432,19 @@ class Student():
 
     def get_dob(self):
         return self.__dob
-    
+
     def get_emailid(self):
         return self.__emailid
 
     def get_phoneno(self):
         return self.__phoneno
-    
+
     def get_address(self):
         return self.__address
 
     def get_stream(self):
         return self.__stream
-        
+
     def get_course(self):
         return self.__course
 
@@ -443,47 +452,53 @@ class Student():
         pass
 
 # Exam Class - Calculates the marks of the students
+
+
 class Result:
-    def __init__(self,subjects,marks):
+    def __init__(self, subjects, marks):
         # Removing the unnecessary data.
         marks.pop(0)
         subjects.pop(0)
 
-        #Dictionary with subjects and scored marks
-        self.subjectsAndScoredMarks = {} ############################################################
-        for i in range(0,len(marks)):
+        # Dictionary with subjects and scored marks
+        self.subjectsAndScoredMarks = {}
+        for i in range(0, len(marks)):
             if "Theory" in subjects[i]:
                 if int(marks[i]) > 35:
-                    self.subjectsAndScoredMarks.update({subjects[i]:[marks[i],"Pass"]})
+                    self.subjectsAndScoredMarks.update(
+                        {subjects[i]: [marks[i], "Pass"]})
                 else:
-                     self.subjectsAndScoredMarks.update({subjects[i]:[marks[i],"Fail"]})
+                    self.subjectsAndScoredMarks.update(
+                        {subjects[i]: [marks[i], "Fail"]})
             elif "Practical" in subjects[i]:
-                if  int(marks[i]) > 20:
-                    self.subjectsAndScoredMarks.update({subjects[i]:[marks[i],"Pass"]})
+                if int(marks[i]) > 20:
+                    self.subjectsAndScoredMarks.update(
+                        {subjects[i]: [marks[i], "Pass"]})
                 else:
-                    self.subjectsAndScoredMarks.update({subjects[i]:[marks[i],"Fail"]})
+                    self.subjectsAndScoredMarks.update(
+                        {subjects[i]: [marks[i], "Fail"]})
 
        # Total marks are incremented based on the subjwct type(Theory/Practical).
-        self.totalMarksList = [] #####################################################################
+        self.totalMarksList = []
         for s in subjects:
             if "Theory" in s:
                 self.totalMarksList.append(100)
-            elif "Practical" in s :
+            elif "Practical" in s:
                 self.totalMarksList.append(50)
         self.totalMarks = sum(self.totalMarksList)
 
         # Sum of marks scored by student, percentage, and grade.
-        self.scoredMarks = 0 ##########################################################################
+        self.scoredMarks = 0
         for m in marks:
             self.scoredMarks += int(m)
-        self.percentage = 0 ###########################################################################
-        self.grade = "" ###############################################################################
-        
+        self.percentage = 0
+        self.grade = ""
+
     def calculateNGrade(self):
         self.percentage = int((self.scoredMarks / self.totalMarks) * 100)
         if self.percentage > 85 and self.percentage < 100:
             self.grade = "A+"
-        elif self.percentage > 75  and self.percentage < 85:
+        elif self.percentage > 75 and self.percentage < 85:
             self.grade = "A"
         elif self.percentage > 65 and self.percentage < 75:
             self.grade = "B+"
@@ -491,11 +506,11 @@ class Result:
             self.grade = "B"
         elif self.percentage > 50 and self.percentage < 55:
             self.grade = "C+"
-        elif self.percentage > 45  and self.percentage < 50:
+        elif self.percentage > 45 and self.percentage < 50:
             self.grade = "C"
         else:
             self.grade = "F"
-            
+
     def get_subjectsAndScoredMarks(self):
         return self.subjectsAndScoredMarks
 
@@ -510,13 +525,15 @@ class Result:
 
     def get_percentatage(self):
         return self.percentage
-    
+
     def get_grade(self):
         return self.grade
 
 # Library Class
+
+
 class Library:
-    def __init__(self,regNo,bookNo):
+    def __init__(self, regNo, bookNo):
         self.regNo = regNo
         self.bookNo = bookNo
         csv_file_reader9 = csv.reader(
@@ -528,23 +545,24 @@ class Library:
             else:
                 self.bookName = None
         self.borrowDate = date.today()
-        self.returnDate = self.borrowDate + timedelta(days = 3)
+        self.returnDate = self.borrowDate + timedelta(days=3)
 
-    def setBorrowDate(self,date):
+    def setBorrowDate(self, date):
         self.borrowDate = date
 
-    def setReturnDate(self,date):
+    def setReturnDate(self, date):
         self.returnDate = date
 
     def enterData(self):
-        data = [self.regNo,self.bookNo,self.bookName,self.borrowDate,self.returnDate]
+        data = [self.regNo, self.bookNo, self.bookName,
+                self.borrowDate, self.returnDate]
         with open('library\\library.csv', 'a', newline='') as f:
             writer = csv.writer(f)
             writer.writerow(data)
-            
+
     def calculateDays(self):
         dateToday = str(date.today())
-        dateToday = datetime.strptime(dateToday,"%Y-%m-%d")
+        dateToday = datetime.strptime(dateToday, "%Y-%m-%d")
         if dateToday > self.returnDate:
             noOfDays = 0
             lateFee = 0
@@ -552,34 +570,34 @@ class Library:
                 noOfDays += 1
                 lateFee += 10
                 self.returnDate += timedelta(days=1)
-            print("\nYou are charged with late fee of {} of {} days. Please pay the amount to Librarian.".format(lateFee,noOfDays))
+            print("\nYou are charged with late fee of {} of {} days. Please pay the amount to Librarian.".format(
+                lateFee, noOfDays))
             time.sleep(2)
             lib = 0
             while lib == 0:
                 resp = input("\nEnter Y to pay the amount : ")
                 if resp.upper() == "Y":
-                    print("\nThank you for availing the library services. Do visit next time.")
+                    print(
+                        "\nThank you for availing the library services. Do visit next time.")
                     time.sleep(2)
                     csv_file_reader1 = csv.reader(
-                    open("C:\\Users\\2145644\\OOPSProject\\library\\library.csv", "r"))
+                        open("C:\\Users\\2145644\\OOPSProject\\library\\library.csv", "r"))
                     lib = 1
                 else:
                     print("\nInvalid input")
         else:
             print("\nNo late fee charges applicable. Thank you for returning the book before due date. Do visit next time.")
             time.sleep(10)
-             
+
         index = -1
         csv_file_reader1 = csv.reader(
-                    open("C:\\Users\\2145644\\OOPSProject\\library\\library.csv", "r"))
+            open("C:\\Users\\2145644\\OOPSProject\\library\\library.csv", "r"))
         for row in csv_file_reader1:
             if row[0] == self.regNo and row[1] == self.bookNo:
                 break
             else:
                 index += 1
-        
+
         df = pd.read_csv('library\library.csv')
-        df.drop([index],inplace=True)
+        df.drop([index], inplace=True)
         df.to_csv("library\\library.csv", index=False)
-       
-         
