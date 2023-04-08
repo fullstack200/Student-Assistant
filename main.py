@@ -5,7 +5,7 @@ import csv
 from csv import writer
 import time
 import pandas as pd
-from datetime import datetime, timedelta
+from datetime import datetime
 
 
 def clear(): return os.system('cls')
@@ -25,7 +25,7 @@ results = {"BCA": ["results\\f_bca_results.csv", "results\\s_bca_results.csv", "
 attendance = {"BCA": ["attendance\\f_bca_attendance.csv", "attendance\\s_bca_attendance.csv", "attendance\\t_bca_attendance.csv"], "BCA in Analytics": ["attendance\\f_bcaana_attendance.csv", "attendance\\s_bcaana_attendance.csv", "attendance\\t_bcaana_attendance.csv"], "BSc(PMCS)": ["attendance\\f_bsc(pmcs)_attendance.csv", "attendance\\s_bsc(pmcs)_attendance.csv", "attendance\\t_bsc(pmcs)_attendance.csv"], "BSc(PME)": ["attendance\\f_bsc(pme)_attendance.csv", "attendance\\s_bsc(pme)_attendance.csv", "attendance\\t_bsc(pme)_attendance.csv"], "BBA": ["attendance\\f_bba_attendance.csv", "attendance\\s_bba_attendance.csv", "attendance\\t_bba_attendance.csv"], "BBA in Aviation": ["attendance\\f_bbaava_attendance.csv", "attendance\\s_bbaava_attendance.csv", "attendance\\t_bbaava_attendance.csv"], "BCom": [
     "attendance\\f_bcom_attendance.csv", "attendance\\s_bcom_attendance.csv", "attendance\\t_bcom_attendance.csv"], "BCom in Finance": ["attendance\\f_bcomfin_attendance.csv", "attendance\\s_bcomfin_attendance.csv", "attendance\\t_bcomfin_attendance.csv"], "BCom in Tourism": ["attendance\\f_bcomtou_attendance.csv", "attendance\\s_bcomtou_attendance.csv", "attendance\\t_bcomtou_attendance.csv"], "BA in English": ["attendance\\f_baeng_attendance.csv", "attendance\\s_baeng_attendance.csv", "attendance\\t_baeng_attendance.csv"], "BA in Sociology": ["attendance\\f_basoc_attendance.csv", "attendance\\s_basoc_attendance.csv", "attendance\\t_basoc_attendance.csv"], "BA in Economics": ["attendance\\f_baeco_attendance.csv", "attendance\\s_baeco_attendance.csv", "attendance\\t_baeco_attendance.csv"]}
 
-
+# The first function to be executed in program.
 def main_menu():
     counter = 0
     while counter == 0:
@@ -40,7 +40,7 @@ def main_menu():
             print("Invalid input")
             time.sleep(3)
 
-
+# Function which captures response and calls the appropriate function name.
 def response(n):
     if n == "1":
         admission()
@@ -53,7 +53,7 @@ def response(n):
     elif n == "5":
         library()
     elif n == "6":
-        pass
+        coCurricular()
     elif n == "7":
         exit()
 
@@ -633,7 +633,7 @@ def admission():
 
 def idcard():
     def register():
-        year = datetime.date.today().year
+        year = datetime.today().year
         appln_no = []
         csv_file_reader = csv.reader(
             open("C:\\Users\\2145644\\OOPSProject\\Data\\applications.csv", "r"))
@@ -1046,18 +1046,15 @@ def exam():
         print("Examination Section".center(133, '-'))
         print("Please select an option to proceed. \n\n1. Examination Time Table\n2. Check results\n3. Go back")
         ans = input("\nEnter the option number : ")
-        if ans.isalpha() or ans in "4567890`~!@#$%^&*()-_=+\{\}[]\|:;'\"<>,.?/\\":
+        if ans == "1":
+            check_time_table()
+        elif ans == "2":
+            check_results()
+        elif ans == "3":
+            main_menu()
+        else:
             print("Invalid input")
             time.sleep(3)
-        else:
-            status = 1
-    if ans == "1":
-        check_time_table()
-    elif ans == "2":
-        check_results()
-        pass
-    elif ans == "3":
-        main_menu()
 
 
 def attendence():
@@ -1351,8 +1348,8 @@ def library():
         for row in csv_file_reader7:
             if row[0] == regNo and row[1] == bookNo:
                 libRet = Library(regNo,row[1])
-                borrowDate = datetime.strptime(row[3],"%d-%m-%Y")
-                returnDate = datetime.strptime(row[4],"%d-%m-%Y")
+                borrowDate = datetime.strptime(row[3],"%Y-%m-%d")
+                returnDate = datetime.strptime(row[4],"%Y-%m-%d")
                 libRet.setBorrowDate(borrowDate)
                 libRet.setReturnDate(returnDate)
                 libRet.calculateDays()
@@ -1381,12 +1378,31 @@ def library():
             print("\nInvalid input")
             time.sleep(2)
 
+def coCurricular():
+    clear()
+    print("Events".center(130,"-"))
+    print("\nHere's a list of upcoming events in college")
+    print("\n{:<30} {:<40} {:<13} {:<18} {}".format(
+            'Event Name', 'Event Location', 'Event Date', 'Event Timings','Event Coordinators'))
+    print("------------------------------------------------------------------------------------------------------------------------------")
+    csvFilereader = csv.reader(open("coCurricular\coCurricularList.csv","r"))
+    i = 1
+    for row in csvFilereader:
+        if i == 1:
+           i += 1
+           continue
+        else:
+            print("{:<30} {:<40} {:<13} {:<18} {}".format(
+            row[0], row[1], row[2], row[3], row[4]))
+
+
+    time.sleep(20)
 
 def update_data():
     current = datetime.now()
     u_month = current.month
     u_date = current.day
-    if u_month == 2 and u_date == 23:
+    if u_month == 2 and u_date == 8:
 
         # Updating the count.txt files which contain counts of student in each course.
         for i in count:

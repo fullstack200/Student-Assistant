@@ -18,7 +18,7 @@ class Admission:
 
     def __init__(self, first_name, last_name, gender, dob, phone_no, email_id, address, father_name, father_occupation, mother_name, mother_occupation, category, tenth_score, twelveth_score, previous_stream, stream_opting_for, course_opting_for, achievements):
         # Personal details
-        current = datetime.date.today()
+        current = datetime.today()
         current_year = current.year
         self.__appno = str(current_year) + "APPLN" + str(Admission.counter)
         with open("C:\\Users\\2145644\\OOPSProject\\counts\\appln_count.txt", 'w') as f:
@@ -394,7 +394,7 @@ class Student():
         
         with open(txtFile, 'r') as r:
             count = r.read()
-            year = datetime.date.today().year
+            year = datetime.today().year
             self.__reg_no = str(year)[2] + str(year)[3] + initial + count
         
         with open(txtFile,'w') as w:
@@ -567,6 +567,7 @@ class Library:
                     print("\nInvalid input")
         else:
             print("\nNo late fee charges applicable. Thank you for returning the book before due date. Do visit next time.")
+            time.sleep(10)
              
         index = -1
         csv_file_reader1 = csv.reader(
