@@ -1,6 +1,6 @@
-# Student Buddy
+# Student-Assistant
 
-Welcome to **Student Buddy**! This is a terminal-based application developed in Python, designed to assist students with various academic and extracurricular activities.
+Welcome to **Student-Assistant**! This is a terminal-based application developed in Python, designed to assist students with various academic and extracurricular activities.
 
 ## Features
 - **Student Registration:** 
